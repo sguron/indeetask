@@ -1,0 +1,10 @@
+{% extends 'tasktracker/base_login.html' %}{% load bootstrap %}
+
+{% block form-heading %}Signup{% endblock %}
+{% block login-form %}
+    {{ form|bootstrap }}
+
+{% endblock %}
+{% block form-submit %}Signup{% endblock %}
+{% block buttons %}<button type="submit" class="btn btn-primary">Signup</button>
+{% endblock %}

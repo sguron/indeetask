@@ -1,0 +1,434 @@
+<!DOCTYPE html>{% load staticfiles %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %}</title>
+
+<link href="{% static 'tasktracker/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'tasktracker/css/styles.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<!--Icons-->
+<script src="{% static 'tasktracker/js/lumino.glyphs.js' %}"></script>
+
+<!--[if lt IE 9]>
+<script src="{% static 'tasktracker/js/html5shiv.js' %}"></script>
+<script src="{% static 'tasktracker/js/respond.min.js' %}"></script>
+<![endif]-->
+
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Indee</span>TaskTracker</a>
+				<ul class="user-menu">
+
+				</ul>
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		{% include 'tasktracker/side_menu.html' %}
+
+	</div><!--/.sidebar-->
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">{% block page-header %}Tasks{% endblock %}</h1>
+			</div>
+		</div><!--/.row-->
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}bg-{{ message.tags }}{% else %}bg-primary{% endif %}" role="alert">
+		    <svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg> {{ message }}
+{#            <a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>#}
+        </div>
+        {% endfor %}
+
+    {% endif %}
+        {% block content %}{% endblock %}
+	</div>	<!--/.main-->
+
+	<script src="{% static 'tasktracker/js/jquery-1.11.1.min.js' %}"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="{% static 'tasktracker/js/bootstrap.min.js' %}"></script>
+	<script>
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+		        $(this).find('em:first').toggleClass("glyphicon-minus");
+		    });
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+
+
+	</script>
+<script>
+
+    var categories = {};
+    var tasks_dict = {};
+    var newTaskCategory = "";
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function renderCategory(category){
+        template = '<div class="col-md-4 task-category" cat-id='+ category.id +' id=cat-'+ category.id +'>\
+				<div class="panel panel-blue">\
+					<div class="panel-heading">\
+                        <span class="category-name">'+ category.name +'</span>\
+                        <span class="pull-right action-buttons">\
+									<a href="#" class="trash"><button type="button" class="btn btn-danger btn-delete-category">Delete</button></a>\
+                        </span>\
+                    </div>\
+					<div class="panel-body">\
+						<ul class="todo-list sortable-tasks"></ul>\
+					</div>\
+					<div class="panel-footer">\
+						<div class="input-group">\
+							<span class="input-group-btn">\
+								<button class="btn btn-primary btn-md btn-new-task">New Task</button>\
+							</span>\
+						</div>\
+					</div>\
+				</div>\
+			</div>';
+
+        taskspanel = $("#tasks-panel");
+
+        h = $.parseHTML(template);
+        taskspanel.append(h);
+
+        this_cat = $("#cat-"+ category.id);
+
+        this_cat.find(".sortable-tasks").sortable({
+            connectWith: ".sortable-tasks",
+            update: function (e, ui) {
+                    //call after a drag-stop: find the current category and then the position in sort list and send that to server
+                    current_category = ui.item.closest('.task-category').attr('cat-id');
+                    prev_task = ui.item.prev('li').attr('task-id');
+
+                    //debugger;
+
+                    if(typeof prev_task === "undefined"){
+                        sort_weight = 0;
+                    }else{
+                        sort_weight = tasks_dict[prev_task].sort_weight;
+                    }
+
+
+                    data = {
+                        'sort_weight': sort_weight + 1,
+                        'category': current_category
+                    };
+                    $.ajax({
+                    url: '/tasktracker/tasks/' + ui.item.attr('task-id') + '/',
+                    method: 'PATCH', data: data,
+
+                    success: function (response) {
+                            refreshTasks()
+                    },
+
+                    error: function (xhr) {
+                        response = xhr.responseJSON;
+                        console.log("Failed to delete category")
+                    }
+
+                 });
+
+
+                    console.log("Drag change");
+            }
+        }).disableSelection();
+
+        this_cat.find(".btn-new-task").click(function(){
+            newTaskCategory = $(this).closest(".task-category").attr('cat-id');
+            $("#modal-new-task").modal("show");
+        });
+
+        this_cat.find(".btn-delete-category").click(function(){
+            category_object = $(this).closest(".task-category");
+            category_id = category_object.attr('cat-id');
+            $.ajax({
+                url: '/tasktracker/categories/' + category_id + '/',
+                method: 'DELETE',
+
+                success: function (response) {
+                        category_object.remove();
+                },
+
+                error: function (xhr) {
+                    response = xhr.responseJSON;
+                    console.log("Failed to delete category")
+                }
+
+             });
+
+        });
+    }
+
+    function renderCategories(categories){
+        taskspanel = $("#tasks-panel");
+        taskspanel.empty();
+
+        $.each(categories, function(i,category){
+            console.log("rendering category", category.id);
+            renderCategory(category)
+        });
+
+    }
+
+    function renderTask(location, task){
+        template = '<li class="todo-list-item" task-id="'+ task.id +'" id=task-'+ task.id +'>\
+                        <div class="checkbox" style="max-width:295px;">\
+                            <label for="checkbox">'+ task.title +'<br><p class="task-description">'+ task.description +'</p></label>\
+                        </div>\
+                        <div class="pull-right action-buttons">\
+                            <a href="#" class="trash delete-task"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>\
+                        </div>\
+                    </li>';
+
+        h = $.parseHTML(template);
+        location.append(h);
+
+        tasks_dict[task.id.toString()] = task;
+
+
+        this_task = $("#task-"+ task.id);
+
+        this_task.find("a.delete-task").click(function(){
+            list_object = $(this).closest(".todo-list-item");
+            task_id = list_object.attr('task-id');
+            $.ajax({
+                url: '/tasktracker/tasks/' + task_id + '/',
+                method: 'DELETE',
+
+                success: function (response) {
+                        list_object.remove();
+                },
+
+                error: function (xhr) {
+                    response = xhr.responseJSON;
+                    console.log("Failed to delete task")
+                }
+
+             });
+
+        });
+    }
+
+    function renderTasks(tasks){
+        $.each(tasks, function(i,task){
+
+            console.log("rendering task", task.id);
+            category_location = $("#cat-"+ task.category + " .todo-list");
+            renderTask(category_location, task)
+        });
+    }
+
+    function loadTasks(){
+        $.ajax({
+            url: '/tasktracker/tasks/',
+            method: 'GET',
+
+            success: function (response) {
+                if(response){
+                    renderTasks(response)
+                }
+
+                //todo load posts now
+            },
+
+            error: function (xhr) {
+                response = xhr.responseJSON;
+                if(xhr.status == 400){
+
+                }
+                console.log("Failed to load posts")
+            }
+
+        });
+    }
+
+    function refreshTasks(){
+        $.ajax({
+            url: '/tasktracker/tasks/',
+            method: 'GET',
+
+            success: function (response) {
+                tasks_dict = {};
+                $.each(response, function (i, task) {
+                    tasks_dict[task.id.toString()] = task;
+                });
+
+                //todo load posts now
+            },
+
+            error: function (xhr) {
+                response = xhr.responseJSON;
+                if(xhr.status == 400){
+
+                }
+                console.log("Failed to load posts")
+            }
+
+        });
+    }
+
+    function loadCategories(){
+        $.ajax({
+            url: '/tasktracker/categories/',
+            method: 'GET',
+
+            success: function (response) {
+                if(response){
+                    categories = response;
+                    renderCategories(response)
+                }
+
+                loadTasks();
+            },
+
+            error: function (xhr) {
+                response = xhr.responseJSON;
+                if(xhr.status == 400){
+
+                }
+                console.log("Failed to load categories")
+            }
+
+        });
+    }
+
+  $( function() {
+
+        $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        }
+        });
+
+        $("#btn-new-category").click(function(){
+          $("#modal-new-category").modal("show");
+        });
+
+        // new category
+        $("#modal-new-category .btn-primary").click(function(){
+            data = {
+            'name': $("#new_category_name").val()
+            };
+
+            $(".has-error").removeClass("has-error");
+            $(".help-block").html("");
+
+            $.ajax({
+            url: '/tasktracker/categories/',
+            method: 'POST', data:data,
+
+            success: function (response) {
+                renderCategory(response);
+                $("#new_category_name").val("");
+                $("#modal-new-category").modal("hide");
+            },
+
+            error: function (xhr) {
+                response = xhr.responseJSON;
+                if(xhr.status == 400){
+                    $.each(response, function (key, error_text) {
+                        $("#for-"+ key ).addClass("has-error");
+                        $("#for-"+ key + " .help-block").html(error_text);
+                    })
+                }
+                $("#new_category_name").val("");
+                console.log("Failed to load categories")
+            }
+
+            });
+        });
+
+        // new post
+        $("#modal-new-task .btn-primary").click(function(){
+            data = {
+                'title': $("#new_task_title").val(),
+                'description': $("#new_task_description").val(),
+                'category': newTaskCategory
+            };
+
+            $(".has-error").removeClass("has-error");
+            $(".help-block").html("");
+
+            $.ajax({
+            url: '/tasktracker/tasks/',
+            method: 'POST', data:data,
+
+            success: function (response) {
+                category_location = $("#cat-"+ newTaskCategory + " .todo-list");
+                renderTask(category_location, response);
+                $("#modal-new-task").modal("hide");
+                $("#new_task_title").val(""),
+                $("#new_task_description").val("")
+            },
+
+            error: function (xhr) {
+                response = xhr.responseJSON;
+                if(xhr.status == 400){
+                    $.each(response, function (key, error_text) {
+                        $("#for-"+ key ).addClass("has-error");
+                        $("#for-"+ key + " .help-block").html(error_text);
+                    })
+
+                }
+
+                console.log("Failed to load categories")
+            }
+
+            });
+        });
+        loadCategories();
+  } );
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{% extends 'tasktracker/base_login.html' %}{% load bootstrap %}
+
+{% block form-heading %}Login{% endblock %}
+{% block login-form %}
+    {{ form|bootstrap }}
+
+{% endblock %}
+
+
+{% block buttons %}<button type="submit" class="btn btn-primary">Login</button>
+<a href="{% url "signup-url" %}" class="btn">Signup</a>
+{% endblock %}

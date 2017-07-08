@@ -1,0 +1,11 @@
+Django==1.9.5
+djangorestframework==3.3.3
+django-storages==1.4.1
+uWSGI
+mysqlclient
+coverage==4.0.3
+pylint
+pylint_django
+django-cors-headers
+django-bootstrap-form>=3.2
+

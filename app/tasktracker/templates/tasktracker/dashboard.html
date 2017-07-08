@@ -1,0 +1,62 @@
+{% extends 'tasktracker/base.html' %}
+{% block content %}
+
+    <div class="row" id="tasks-panel">
+    </div>
+
+    <!-- modal for new category -->
+    <div class="modal fade" id="modal-new-category" tabindex="-1" role="dialog" aria-labelledby="modelNewCategory" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Create a new category</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group" id="for-name">
+                <label class="control-label" for="new_category_name">Category Name</label>
+                <div class=" ">
+                  <input class=" form-control" id="new_category_name" maxlength="20" name="username" type="text" />
+                    <span class="help-block "></span>
+                </div>
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+    </div>
+
+
+    <!-- modal for new task -->
+    <div class="modal fade" id="modal-new-task" tabindex="-1" role="dialog" aria-labelledby="modelNewTask" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">New Task</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group" id="for-title">
+                    <label class="control-label" for="new_task_title">Title</label>
+                    <div class="">
+                      <input class=" form-control" id="new_task_title" maxlength="20" name="task_title" type="text" />
+                        <span class="help-block "></span>
+                    </div>
+                </div>
+
+                <div class="form-group" id="for-description">
+                    <label class="control-label" for="new_task_descritpion">Description</label>
+                    <textarea class="form-control" id="new_task_description" ></textarea>
+                    <span class="help-block "></span>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </div>
+    </div>
+{% endblock %}

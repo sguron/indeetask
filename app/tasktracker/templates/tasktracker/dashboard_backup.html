@@ -1,0 +1,510 @@
+{% extends 'tasktracker/base.html' %}
+{% block content %}
+
+    <div class="row" id="tasks-panel">
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading">
+                        <span>Urgent</span>
+                        <span class="pull-right action-buttons">
+									<a href="#" class="trash"><button type="button" class="btn btn-danger">Delete</button></a>
+                        </span>
+                    </div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading dark-overlay">Urgent</div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading dark-overlay">Urgent</div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading dark-overlay">Urgent</div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading dark-overlay">Urgent</div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+    <div class="col-md-4">
+				<div class="panel panel-blue">
+					<div class="panel-heading dark-overlay">Urgent</div>
+					<div class="panel-body">
+						<ul class="todo-list sortable-tasks">
+						<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Make a plan for today</label>
+								</div>
+								<div class="pull-right action-buttons">
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Update Basecamp</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Send email to Jane</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Drink coffee</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Do some work</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+							<li class="todo-list-item">
+								<div class="checkbox">
+
+									<label for="checkbox">Tidy up workspace</label>
+								</div>
+								<div class="pull-right action-buttons">
+
+
+									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="panel-footer">
+						<div class="input-group">
+
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo">New Task</button>
+                                <button class="btn btn-danger btn-md" id="btn-todo" style="margin-left:5px;">Delete category</button>
+							</span>
+
+						</div>
+					</div>
+				</div>
+
+			</div><!--/.col-->
+    </div>
+{% endblock %}
